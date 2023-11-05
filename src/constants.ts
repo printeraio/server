@@ -1,5 +1,7 @@
 export const isProduction = process.env.NODE_ENV === 'production';
 
+export const MQTT_WEB_CLIENT_ID = 'printera';
+
 export const awsCredentials = {
   region: process.env.AWS_ACCOUNT_REGION,
   accountId: process.env.AWS_ACCOUNT_ID,
