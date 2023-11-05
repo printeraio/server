@@ -1,7 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { Response } from 'express';
 
 import { AuthService } from '@app/auth/auth.service';
 import { CreateAuthDto } from '@app/auth/dto/create-auth.dto';
+import { MqttAuthDto } from '@app/auth/dto/mqtt-auth.dto';
+import { MQTT_WEB_CLIENT_ID } from '@app/constants';
 
 @Controller('auth')
 export class AuthController {
@@ -20,5 +23,11 @@ export class AuthController {
   @Post('refresh')
   refresh(@Body() { refreshToken }: { refreshToken: string }) {
     return this.authService.refresh(refreshToken);
+  }
+
+  @Post('mqtt')
+  mqttAuth(@Res() response: Response, @Body() { clientId }: MqttAuthDto) {
+    if (clientId === MQTT_WEB_CLIENT_ID) return response.send(HttpStatus.OK).json({ result: 'allow' });
+    return response.send(HttpStatus.OK).json({ result: 'ignore' });
   }
 }
