@@ -27,7 +27,7 @@ export class AuthController {
 
   @Post('mqtt')
   mqttAuth(@Res() response: Response, @Body() { clientId }: MqttAuthDto) {
-    if (clientId === MQTT_WEB_CLIENT_ID) return response.send(HttpStatus.OK).json({ result: 'allow' });
-    return response.send(HttpStatus.OK).json({ result: 'ignore' });
+    if (clientId === MQTT_WEB_CLIENT_ID) return response.status(HttpStatus.OK).json({ result: 'allow' });
+    return response.status(HttpStatus.OK).json({ result: 'ignore' });
   }
 }
